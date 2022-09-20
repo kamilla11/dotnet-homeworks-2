@@ -11,25 +11,24 @@
     ldarg.0 // value1
     ldarg.2 // value2
    
-    IL_0005: ldarg.1      // operation
-    IL_0006: switch       (Add, Sub, Mul, Div)
-    IL_001b: br.s         IL_0035
+    ldarg.1      // operation
+    switch       (Add, Sub, Mul, Div)
+    br.s         Exception
 
     Add:  add
-    IL_0020: ret
+    ret
 
     Sub:  sub
-    IL_0026: ret
+    ret
 
     Mul: mul
-    IL_002c: ret
+    ret
 
     Div:  div
-    IL_0032: ret      // V_0
+    ret      
 
-    IL_0035: newobj       instance void [System.Runtime]System.ArgumentOutOfRangeException::.ctor()
-    IL_003a: throw
-    
+    Exception: newobj       instance void [System.Runtime]System.ArgumentOutOfRangeException::.ctor()
+    throw
   } 
 }
 
