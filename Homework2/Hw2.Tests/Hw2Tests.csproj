@@ -23,6 +23,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Hw2\Hw2.ilproj" />
+      <ProjectReference Include="..\Hw2_Console\Hw2_Console.csproj" />
     </ItemGroup>
 
 </Project>
