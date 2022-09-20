@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
+
+        <RootNamespace>Hw1.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
