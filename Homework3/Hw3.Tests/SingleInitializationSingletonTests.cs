@@ -9,7 +9,7 @@ public class SingleInitializationSingletonTests
     [Fact]
     public void AccessToModifiedVariable()
     {
-        var numb = 5000;
+        var numb = 3000;
         Task[] tasks = new Task[numb];
         for (int i = 0; i < numb; i++)
         {
@@ -18,6 +18,8 @@ public class SingleInitializationSingletonTests
                 SingleInitializationSingleton.Reset();
                 SingleInitializationSingleton.Initialize(2);
                 SingleInitializationSingleton.Initialize(3);
+                SingleInitializationSingleton.Reset();
+                SingleInitializationSingleton.Reset();
             });
             tasks[i].Start();
         }
