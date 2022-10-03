@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Hw3.Tests;
@@ -6,18 +7,35 @@ namespace Hw3.Tests;
 public class SingleInitializationSingletonTests
 {
     [Fact]
+    public void AccessToModifiedVariable()
+    {
+        var numb = 1000;
+        Task[] tasks = new Task[numb];
+        for (int i = 0; i < numb; i++)
+        {
+            tasks[i] = new Task(() =>
+            {
+                SingleInitializationSingleton.Reset();
+                SingleInitializationSingleton.Initialize(2);
+                //SingleInitializationSingleton.Initialize(3);
+            });
+            tasks[i].Start();
+        }
+
+        Assert.Throws<AggregateException>(() => { Task.WaitAll(tasks); });
+    }
+    
+
+    [Fact]
     public void DefaultInitialization_ReturnsSingleInstance()
     {
         SingleInitializationSingleton.Reset();
         SingleInitializationSingleton? i1 = null;
-        var elapsed = StopWatcher.Stopwatch(() =>
-        {
-            i1 = SingleInitializationSingleton.Instance;
-        });
-        
+        var elapsed = StopWatcher.Stopwatch(() => { i1 = SingleInitializationSingleton.Instance; });
+
         var i2 = SingleInitializationSingleton.Instance;
         Assert.Equal(i2, i1);
-        
+
         Assert.True(elapsed.TotalMilliseconds >= i2.Delay);
     }
 
@@ -32,7 +50,7 @@ public class SingleInitializationSingletonTests
             var i = SingleInitializationSingleton.Instance;
             Assert.Equal(i, SingleInitializationSingleton.Instance);
         });
-        
+
         Assert.True(elapsed.TotalMilliseconds > SingleInitializationSingleton.DefaultDelay);
         Assert.True(elapsed.TotalMilliseconds >= delay);
     }
@@ -40,10 +58,8 @@ public class SingleInitializationSingletonTests
     [Fact]
     public void DoubleInitializationAttemptThrowsException()
     {
+        SingleInitializationSingleton.Reset();
         SingleInitializationSingleton.Initialize(2);
-        Assert.Throws<InvalidOperationException>(() =>
-        {
-            SingleInitializationSingleton.Initialize(3);
-        });
+        Assert.Throws<InvalidOperationException>(() => { SingleInitializationSingleton.Initialize(3); });
     }
 }
