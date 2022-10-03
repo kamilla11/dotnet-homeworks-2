@@ -17,6 +17,7 @@ public class SingleInitializationSingletonTests
             {
                 SingleInitializationSingleton.Reset();
                 SingleInitializationSingleton.Initialize(2);
+                SingleInitializationSingleton.Initialize(3);
             });
             tasks[i].Start();
         }
