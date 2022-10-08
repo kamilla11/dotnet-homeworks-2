@@ -7,28 +7,6 @@ namespace Hw3.Tests;
 public class SingleInitializationSingletonTests
 {
     [Fact]
-    public void AccessToModifiedVariable()
-    {
-        var numb = 3000;
-        Task[] tasks = new Task[numb];
-        for (int i = 0; i < numb; i++)
-        {
-            tasks[i] = new Task(() =>
-            {
-                SingleInitializationSingleton.Reset();
-                SingleInitializationSingleton.Initialize(2);
-                SingleInitializationSingleton.Initialize(3);
-                SingleInitializationSingleton.Reset();
-                SingleInitializationSingleton.Reset();
-            });
-            tasks[i].Start();
-        }
-
-        Assert.Throws<AggregateException>(() => { Task.WaitAll(tasks); });
-    }
-    
-
-    [Fact]
     public void DefaultInitialization_ReturnsSingleInstance()
     {
         SingleInitializationSingleton.Reset();
