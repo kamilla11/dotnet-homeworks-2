@@ -30,19 +30,19 @@ public class SingleInitializationSingleton
                     _instance = new (() => new SingleInitializationSingleton());
                     _isInitialized = false;
                 }
-                else throw new InvalidOperationException();
     }
 
     public static void Initialize(int delay)
     {
         if (!_isInitialized)
+        {
             lock (Locker)
                 if (!_isInitialized)
                 {
                     _instance = new (() => new SingleInitializationSingleton(delay));
                     _isInitialized = true;
                 }
-                else throw new InvalidOperationException();
+        }
         else throw new InvalidOperationException();
     }
 
