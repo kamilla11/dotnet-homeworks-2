@@ -1,6 +1,7 @@
 ﻿module Hw4.Parser
 
 open System
+open System.Collections.Generic
 open Hw4.Calculator
 
 type CalcOptions =
@@ -8,7 +9,9 @@ type CalcOptions =
       arg2: float
       operation: CalculatorOperation }
 
-let isArgLengthSupported (args: string []) = args.Length = 3
+let isArgLengthSupported (args: string []) =
+    let maxArgLength = 3
+    args.Length = maxArgLength
 
 let parseOperation (arg: string) =
     match arg with
@@ -16,26 +19,22 @@ let parseOperation (arg: string) =
     | "-" -> CalculatorOperation.Minus
     | "*" -> CalculatorOperation.Multiply
     | "/" -> CalculatorOperation.Divide
-    | _ -> raise (ArgumentException("Incorrect operation!"))
+    | _ -> raise (ArgumentException "Incorrect operation!")
+
+let parseArgument (value: string) =
+    match Double.TryParse(value) with
+    | true, arg -> arg
+    | _ -> raise (ArgumentException "Incorrect argument!")
 
 let parseCalcArguments (args: string []) =
+
     if not (isArgLengthSupported (args)) then
-        raise (ArgumentException("Incorrect data. Length more than 3."))
+        raise (ArgumentException "Incorrect data. Length more than 3.")
 
-    let couldParse, val1 =
-        System.Double.TryParse(args[0])
-
-    if not (couldParse) then
-        raise (ArgumentException("Incorrect first argument!"))
-
-    let couldParse, val2 =
-        System.Double.TryParse(args[2])
-
-    if not (couldParse) then
-        raise (ArgumentException("Incorrect second argument!"))
-
-    let val3 = parseOperation args[1]
+    let val1 = parseArgument args[0]
+    let val2 = parseArgument args[2]
+    let operation = parseOperation args[1]
 
     { arg1 = val1
       arg2 = val2
-      operation = val3 }
+      operation = operation }
