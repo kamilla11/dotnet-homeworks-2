@@ -16,7 +16,7 @@ let epsilon: decimal = 0.001m
 [<InlineData(15, 5, CalculatorOperation.Divide, 3)>]
 let ``ints parsed correctly`` (value1 : int, value2: int, operation, expectedValue : int) =
     //act
-    let actual = Calculator.calculate value1 operation value2
+    let actual = calculate value1 operation value2
     
     //assert
     Assert.Equal(expectedValue, actual)
@@ -28,7 +28,7 @@ let ``ints parsed correctly`` (value1 : int, value2: int, operation, expectedVal
 [<InlineData(15.6, 5.6, CalculatorOperation.Divide, 2.7857)>]
 let ``floats parsed correctly`` (value1 : float, value2: float, operation, expectedValue : float) =
     //act
-    let actual = (abs (expectedValue - Calculator.calculate value1 operation value2))
+    let actual = (abs (expectedValue - calculate value1 operation value2))
     
     //assert
     Assert.True(actual |> decimal < epsilon)
@@ -40,7 +40,7 @@ let ``floats parsed correctly`` (value1 : float, value2: float, operation, expec
 [<InlineData(15.6, 5.6, CalculatorOperation.Divide, 2.7857)>]
 let ``doubles parsed correctly`` (value1 : double, value2: double, operation, expectedValue : double) =
     //act
-    let actual = (abs (expectedValue - Calculator.calculate value1 operation value2))
+    let actual = (abs (expectedValue - calculate value1 operation value2))
     
     //assert
     Assert.True(actual |> decimal < epsilon)
@@ -52,7 +52,7 @@ let ``doubles parsed correctly`` (value1 : double, value2: double, operation, ex
 [<InlineData(15.6, 5.6, CalculatorOperation.Divide, 2.7857)>]
 let ``decimals parsed correctly`` (value1 : decimal, value2: decimal, operation, expectedValue : decimal) =
     //act
-    let actual = (abs (expectedValue - Calculator.calculate value1 operation value2))
+    let actual = (abs (expectedValue - calculate value1 operation value2))
     
     //assert
     Assert.True(actual < epsilon)
@@ -77,8 +77,8 @@ let ``values parsed correctly`` (value1, operation, value2, expectedValue) =
     match result with
     | Ok resultOk ->
         match resultOk with
-        | arg1, operation, arg2 -> Assert.True((abs (expectedValue - Calculator.calculate arg1 operation arg2)) |> decimal < epsilon)
-    | Error e -> raise (InvalidOperationException(e))
+        | arg1, operation, arg2 -> Assert.True((abs (expectedValue - calculate arg1 operation arg2)) |> decimal < epsilon)
+    | Error e -> raise (InvalidOperationException())
         
 [<Theory>]
 [<InlineData("f", "+", "3")>]
