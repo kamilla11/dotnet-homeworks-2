@@ -19,7 +19,7 @@ let inline isOperationSupported (arg1, operation, arg2) : Result<'a * Calculator
     | Calculator.divide -> Ok(arg1, CalculatorOperation.Divide, arg2)
     | _ -> Error Message.WrongArgFormatOperation
 
-let doubleTryparse (value: string) =
+let doubleTryParse (value: string) =
     match Double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture) with
     | true, arg -> Ok arg
     | _ -> Error Message.WrongArgFormat
@@ -27,8 +27,8 @@ let doubleTryparse (value: string) =
 let parseArgs (args: string []) =
     let result =
         maybe {
-            let! arg1 = doubleTryparse (args[0])
-            let! arg2 = doubleTryparse (args[2])
+            let! arg1 = doubleTryParse (args[0])
+            let! arg2 = doubleTryParse (args[2])
             return (arg1, args[1], arg2)
         }
 
