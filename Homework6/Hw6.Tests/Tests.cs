@@ -8,6 +8,7 @@ using Hw6Client ;
 using Microsoft.FSharp.Control;
 using Microsoft.FSharp.Core;
 
+
 namespace Hw6Tests
 {
     public class BasicTests : IClassFixture<CustomWebApplicationFactory<App.Startup>>
@@ -106,7 +107,7 @@ namespace Hw6Tests
         [InlineData("15", "5", "Multiply", "75", HttpStatusCode.OK)]
         [InlineData("15", "5", "Divide", "3", HttpStatusCode.OK)]
         
-        public async Task TestCorrectResultOnClient(string value1, string value2, string operation,
+        public void TestCorrectResultOnClient(string value1, string value2, string operation,
             string expectedValue, HttpStatusCode statusCode)
         {
             // arrange
@@ -122,7 +123,7 @@ namespace Hw6Tests
         }
 
         [Fact]
-        public async Task TestIncorrectArgumentCount()
+        public void TestIncorrectArgumentCount()
         {
             //arrange
             var args =  new string[] {"3","+","4","5"};
@@ -133,6 +134,44 @@ namespace Hw6Tests
             //assert
             if (result.ErrorValue is not null) Assert.Equal(result.ErrorValue, "WrongArgLength");
             else throw new InvalidOperationException("This test must always return Error Result Type");
+        }
+
+        [Theory]
+        [InlineData("15", "Plus", "5", 20)]
+        [InlineData("15", "Minus", "5", 10)]
+        [InlineData("15", "Multiply", "5", 75)]
+        [InlineData("15", "Divide", "5", 3)]
+        [InlineData("15.6", "Plus", "5.6", 21.2)]
+        [InlineData("15.6", "Minus", "5.6", 10)]
+        [InlineData("15.6", "Multiply", "5.6", 87.36)]
+        [InlineData("15.6", "Divide", "5.6", 2.7857)]
+        public void ValuesParsedCorrectly(string value1, string operation, string value2,
+            double expectedValue)
+        {
+            //arrange
+            var args =  new string[] {value1,operation,value2};
+    
+            //act
+            var result = Hw6.Parser.parseCalcArguments(args);
+
+            if (result.ResultValue is not null) Assert.True(Math.Abs(expectedValue - double.Parse(result.ResultValue)) < 0.001);
+            else throw new InvalidOperationException();
+        }
+
+
+        [Theory]
+        [InlineData(15, 5, Calculator.CalculatorOperation.Plus, 20)]
+        [InlineData(15, 5, Calculator.CalculatorOperation.Minus, 10)]
+        [InlineData(15, 5, Calculator.CalculatorOperation.Multiply, 75)]
+        [InlineData(15, 5, Calculator.CalculatorOperation.Divide, 3)]
+        public void CorrectCalculationResults(int value1, int value2, Calculator.CalculatorOperation operation,
+            int expectedValue)
+        {
+            //var actual = Calculator.calculate<int>();
+            var actual = Calculator.calculate<int, int, int>(value1, operation, value2);
+    
+            //assert
+            Assert.Equal(expectedValue, actual);
         }
     }
 }
