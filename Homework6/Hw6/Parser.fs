@@ -42,6 +42,7 @@ let inline isDividingByZero (arg1, operation, arg2) =
     | CalculatorOperation.Divide, 0.0 -> Error {Type= MessageType.DivideByZero; MessageString = "DivideByZero"}
     | _ -> Ok(arg1, operation, arg2)
 
+[<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let parseCalcArguments (args: string []) =
     let result =
         maybe {
@@ -51,7 +52,7 @@ let parseCalcArguments (args: string []) =
         let! result = c |> isDividingByZero
         return result
     }
-        
+       
     match result with
     | Ok options -> Ok $"{options |||> calculate}"
     | Error message -> Error $"{message.MessageString}"
