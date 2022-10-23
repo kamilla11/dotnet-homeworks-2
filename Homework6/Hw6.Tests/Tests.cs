@@ -110,7 +110,7 @@ namespace Hw6Tests
             string expectedValue, HttpStatusCode statusCode)
         {
             // arrange
-            var url = $"/calculate?value1={value1}&operation={operation}&value2={value2}";
+            var url = $"http://localhost:5000/calculate?value1={value1}&operation={operation}&value2={value2}";
             
             // act
             var client = _factory.CreateClient();

@@ -1,10 +1,8 @@
-﻿
-module Hw6Client.Program 
+﻿module Hw6Client.Program 
 open System
 open System.Net.Http
 open System.Threading.Tasks
 
-[<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let getAsync (client:HttpClient) (url:string) = 
     async {
         let! response = client.GetAsync(url) |> Async.AwaitTask
@@ -13,23 +11,14 @@ let getAsync (client:HttpClient) (url:string) =
         return content
     }
 
-[<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
-let runOnServer (url:string)=
-    Task.Delay(3000) |> ignore
-    async {
-        use httpClient = new HttpClient()
-        let! result = 
-            getAsync httpClient url 
-        printfn "Returned result: %s" result
-    }
  
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]  
 [<EntryPoint>]
 let main args =
     while (true) do 
         let args =  Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries)
+        use httpClient = new HttpClient()
         let url = $"http://localhost:5000/calculate?value1={args[0]}&operation={args[1]}&value2={args[2]}";
-        runOnServer url
-        |> Async.RunSynchronously
+        printfn $"Returned result: {getAsync httpClient url |> Async.RunSynchronously}"
 
     0
