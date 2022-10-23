@@ -11,14 +11,26 @@ let getAsync (client:HttpClient) (url:string) =
         return content
     }
 
+let convertOperation (op: string) =
+    match op with
+    | "+" -> "Plus"
+    | "-" -> "Minus"
+    | "/" -> "Divide"
+    | "*" -> "Multiply"
+    | _ -> "Default"
  
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]  
 [<EntryPoint>]
 let main args =
-    while (true) do 
-        let args =  Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries)
-        use httpClient = new HttpClient()
-        let url = $"http://localhost:5000/calculate?value1={args[0]}&operation={args[1]}&value2={args[2]}";
-        printfn $"Returned result: {getAsync httpClient url |> Async.RunSynchronously}"
-
-    0
+        while (true) do 
+            try 
+               let args =  Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries)
+               let operation = convertOperation args[1]
+               use httpClient = new HttpClient()
+               let url = $"http://localhost:5000/calculate?value1={args[0]}&operation={operation}&value2={args[2]}";
+               printfn $"Returned result: {getAsync httpClient url |> Async.RunSynchronously}"
+            with
+              | ex ->  printfn $"{ex.Message} Please try again." 
+            
+        0
+    

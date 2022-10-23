@@ -8,15 +8,13 @@ open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
+open Values
 
 let calculatorHandler: HttpHandler =
     fun next ctx ->
         let result = maybe {
-            let! val1 = ctx.GetQueryStringValue "value1"
-            let! val2 = ctx.GetQueryStringValue "value2"
-            let! operation = ctx.GetQueryStringValue "operation"
-            let args = [|val1; operation; val2;|]
-            let! calculation = parseCalcArguments args
+            let! values = ctx.TryBindQueryString<Values>()
+            let! calculation = parseCalcArguments [|values.value1; values.operation; values.value2|]
             return calculation
         }    
         
@@ -33,7 +31,7 @@ let calculatorHandler: HttpHandler =
 let webApp =
     choose [
         GET >=> choose [
-             route "/" >=> text "Use //calculate?value1=<VAL1>&operation=<OPERATION>&value2=<VAL2>"
+             route "/" >=> text "Use //calculate?value1=<Val1>&operation=<Operation>&value2=<Val2>"
              route "/calculate" >=> calculatorHandler
         ]
         setStatusCode 404 >=> text "Not Found" 
