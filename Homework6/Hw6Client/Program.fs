@@ -1,6 +1,9 @@
 ﻿module Hw6Client.Program 
 open System
 open System.Net.Http
+open System.Threading.Tasks
+
+[<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let Path = "http://localhost:5000/"
 
 let getAsync (client:HttpClient) (url:string) = 
@@ -13,6 +16,7 @@ let getAsync (client:HttpClient) (url:string) =
 
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let runOnServer (url:string)=
+    Task.Delay(3000) |> ignore
     async {
         use httpClient = new HttpClient()
         let! result = 

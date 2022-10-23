@@ -6,6 +6,7 @@ using Hw6;
 using Xunit;
 using Hw6Client ;
 using Microsoft.FSharp.Control;
+using Microsoft.FSharp.Core;
 
 namespace Hw6Tests
 {
@@ -118,6 +119,20 @@ namespace Hw6Tests
             
             // assert
             Assert.Equal(expectedValue, convertedResult);
+        }
+
+        [Fact]
+        public async Task TestIncorrectArgumentCount()
+        {
+            //arrange
+            var args =  new string[] {"3","+","4","5"};
+
+            //act
+            var result = Parser.parseCalcArguments(args);
+            
+            //assert
+            if (result.ErrorValue is not null) Assert.Equal(result.ErrorValue, "WrongArgLength");
+            else throw new InvalidOperationException("This test must always return Error Result Type");
         }
     }
 }
