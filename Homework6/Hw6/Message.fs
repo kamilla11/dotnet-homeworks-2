@@ -1,6 +1,5 @@
 module Hw6.Message
 
-open System
 
 type MessageType =
     | SuccessfulExecution = 0

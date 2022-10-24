@@ -1,7 +1,6 @@
 ﻿module Hw6Client.Program 
 open System
 open System.Net.Http
-open System.Threading.Tasks
 
 let getAsync (client:HttpClient) (url:string) = 
     async {
@@ -22,9 +21,10 @@ let convertOperation (op: string) =
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]  
 [<EntryPoint>]
 let main args =
-        while (true) do 
+        while true do 
             try 
                let args =  Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries)
+               if not(args.Length = 3) then raise (ArgumentException("Wrong input."))
                let operation = convertOperation args[1]
                use httpClient = new HttpClient()
                let url = $"http://localhost:5000/calculate?value1={args[0]}&operation={operation}&value2={args[2]}";

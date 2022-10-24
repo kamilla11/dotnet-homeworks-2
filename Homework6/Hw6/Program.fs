@@ -21,7 +21,7 @@ let calculatorHandler: HttpHandler =
         match result with
         | Ok ok -> (setStatusCode 200 >=> text (ok.ToString())) next ctx
         | Error error ->
-            if (error.Equals("DivideByZero")) then
+            if error.Equals("DivideByZero") then
                 (setStatusCode 200 >=> text error) next ctx
             else
                 (setStatusCode 400 >=> text error) next ctx
