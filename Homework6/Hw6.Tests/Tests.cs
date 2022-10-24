@@ -6,7 +6,6 @@ using Hw6;
 using Xunit;
 using Hw6Client ;
 using Microsoft.FSharp.Control;
-using Microsoft.FSharp.Core;
 
 
 namespace Hw6Tests
@@ -126,7 +125,7 @@ namespace Hw6Tests
         public void TestIncorrectArgumentCount()
         {
             //arrange
-            var args =  new string[] {"3","+","4","5"};
+            var args =  new [] {"3","+","4","5"};
 
             //act
             var result = Parser.parseCalcArguments(args);
@@ -149,10 +148,10 @@ namespace Hw6Tests
             double expectedValue)
         {
             //arrange
-            var args =  new string[] {value1,operation,value2};
+            var args =  new [] {value1,operation,value2};
     
             //act
-            var result = Hw6.Parser.parseCalcArguments(args);
+            var result = Parser.parseCalcArguments(args);
 
             if (result.ResultValue is not null) Assert.True(Math.Abs(expectedValue - double.Parse(result.ResultValue)) < 0.001);
             else throw new InvalidOperationException();
@@ -173,5 +172,20 @@ namespace Hw6Tests
             //assert
             Assert.Equal(expectedValue, actual);
         }
+
+        [Theory]
+        [InlineData("+", "Plus")]
+        [InlineData("-", "Minus")]
+        [InlineData("/", "Divide")]
+        [InlineData("*", "Multiply")]
+        [InlineData("@", "Default")]
+        public void TestConvertOperation(string operation, string expectedValue)
+        {
+            //act
+            var actual = Program.convertOperation(operation);
+
+            Assert.Equal(expectedValue, actual);
+        }
+        
     }
 }
