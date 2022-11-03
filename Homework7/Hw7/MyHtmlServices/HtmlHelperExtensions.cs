@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Html;
@@ -82,6 +83,7 @@ public static class HtmlHelperExtensions
         }
     }
 
+    [ExcludeFromCodeCoverage]
     private static Tuple<string, string> GetRangeAttribute(PropertyInfo property)
     {
         var attr = property.GetCustomAttribute<RangeAttribute>();
