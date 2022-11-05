@@ -8,8 +8,12 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        
         var builder = WebApplication.CreateBuilder(args);
-
+        
+        builder.Services.AddSingleton<ICalculator, Calculator.Calculator>();   
+        builder.Services.AddSingleton<IParser, Parser>();   
+        
         builder.Services.AddControllersWithViews();
 
         var app = builder.Build();
