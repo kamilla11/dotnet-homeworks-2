@@ -10,7 +10,7 @@ public class Calculator : ICalculator
             Operation.Minus => Minus(value1, value2),
             Operation.Multiply => Multiply(value1, value2),
             Operation.Divide => Divide(value1, value2),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new InvalidOperationException()
         };
     }
 

@@ -31,7 +31,7 @@ public class CalculatorController : Controller
     public IActionResult Index()
     {
         return Content(
-            "Заполните val1, operation(plus, minus, multiply, divide) и val2 здесь '/calculator/calculate?val1= &operation= &val2= '\n" +
+            "Заполните val1, operation(Plus, Minus, Multiply, Divide) и val2 здесь '/calculator/calculate?val1= &operation= &val2= '\n" +
             "и добавьте её в адресную строку.");
     }
 }

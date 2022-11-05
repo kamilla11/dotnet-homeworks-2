@@ -27,7 +27,7 @@ public class IntegrationTests: IClassFixture<WebApplicationFactory<Program>>
         var actual = await response.Content.ReadAsStringAsync();
         Assert.Equal(expected, actual);
     }
-        
+
     [Theory]
     [InlineData("a", Operation.Plus, "4", Messages.InvalidNumberMessage)]
     [InlineData("1000", Operation.Minus, "b",  Messages.InvalidNumberMessage)]
