@@ -33,7 +33,7 @@ public class PostfixParser
 
             if (token == ")")
             {
-                while (stack.Count != 0 && stack.Peek() != "(")
+                while (stack.Peek() != "(")
                 {
                     postfix.Append(stack.Pop() + ' ');
                 }
@@ -111,9 +111,10 @@ public class PostfixParser
                     compareString[1]));
             if (compareString[0] == "(" && compareString[1] == "-" && tempString.Length - 2 > 1)
             {
-                compareString = tempString.Skip(1).Take(2).ToArray();
-                if (numbers.IsMatch(compareString[0]) && compareString[1] == ")")
-                    continue;
+                compareString = tempString.Skip(2).Take(2).ToArray();
+                if (!numbers.IsMatch(compareString[0]) || compareString[1] != ")")
+                    throw new Exception(
+                       MathErrorMessager.InvalidOperatorAfterParenthesisMessage(compareString[1]));
             }
 
             if (compareString[0] == "(" && onlyOperators.IsMatch(compareString[1]))

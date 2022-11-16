@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Hw9.ErrorMessages;
 
 namespace Hw9.Services;
 
@@ -32,6 +33,6 @@ public class ExpressionTree
         "-" => Expression.Subtract(a, b),
         "/" => Expression.Divide(a, b),
         "*" => Expression.Multiply(a, b),
-        _ => throw new NotSupportedException()
+        _ => throw new Exception(MathErrorMessager.UnknownCharacter)
     };
 }
