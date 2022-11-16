@@ -19,7 +19,6 @@ public class ServicesTests : IClassFixture<WebApplicationFactory<Program>>
         var response = () =>ExpressionTree.GenerateExpressionTree(expression);
         //assert
         var exception = Assert.Throws<Exception>(response);
-        //The thrown exception can be used for even more detailed assertions.
         Assert.Equal(result, exception.Message);
     }
 
@@ -34,8 +33,19 @@ public class ServicesTests : IClassFixture<WebApplicationFactory<Program>>
         var response = () =>(object)ExpressionTreeVisitor.GetResult(expression, 1, 2);
         //assert
         var exception = Assert.Throws<Exception>(response);
-        //The thrown exception can be used for even more detailed assertions.
         Assert.Equal("Unknown character", exception.Message);
     }
-}
 
+    [Theory]
+    [InlineData("(1 + 3) - (--)", MathErrorMessager.WrongNotationForANegativeNumber)]
+    [InlineData("(1 + 3) - (-4 / 5)", MathErrorMessager.WrongNotationForANegativeNumber)]
+    public async Task ConvertToPostfix_ExpressionWithNegativeNumber_Error(string expression, string error)
+    {
+        //act
+        var response = () =>(object)PostfixParser.ConvertToPostfix(expression);
+        //assert
+        var exception = Assert.Throws<Exception>(response);
+        Assert.Equal(error, exception.Message);
+    }
+    
+}

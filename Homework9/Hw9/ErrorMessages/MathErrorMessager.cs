@@ -2,16 +2,17 @@ namespace Hw9.ErrorMessages;
 
 public static class MathErrorMessager
 {
-    public const string DivisionByZero = "Division by zero"; //done
-    public const string EmptyString =  "Empty string"; //done
-    public const string IncorrectBracketsNumber = "The number of closing and opening brackets does not match"; //done
-    public const string StartingWithOperation =  "An expression cannot start with an operation sign";  //done
-    public const string EndingWithOperation =  "An expression cannot end with an operation sign"; //done
+    public const string DivisionByZero = "Division by zero"; 
+    public const string EmptyString =  "Empty string"; 
+    public const string IncorrectBracketsNumber = "The number of closing and opening brackets does not match";
+    public const string StartingWithOperation =  "An expression cannot start with an operation sign"; 
+    public const string EndingWithOperation =  "An expression cannot end with an operation sign";
     public const string NotNumber =  "There is no such number";
-    public const string UnknownCharacter =  "Unknown character"; //done
-    public const string TwoOperationInRow = "There are two operations in a row"; //done
-    public const string InvalidOperatorAfterParenthesis = "After the opening brackets, only negation can go"; //done
-    public const string OperationBeforeParenthesis = "There is only a number before the closing parenthesis"; //done
+    public const string UnknownCharacter =  "Unknown character";
+    public const string TwoOperationInRow = "There are two operations in a row";
+    public const string InvalidOperatorAfterParenthesis = "After the opening brackets, only negation can go";
+    public const string OperationBeforeParenthesis = "There is only a number before the closing parenthesis";
+    public const string WrongNotationForANegativeNumber = "Wrong notation for a negative number";
 
     public static string NotNumberMessage(string num) =>
         $"{NotNumber} {num}";

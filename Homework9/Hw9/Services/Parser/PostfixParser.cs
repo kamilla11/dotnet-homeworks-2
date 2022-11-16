@@ -114,7 +114,7 @@ public class PostfixParser
                 compareString = tempString.Skip(2).Take(2).ToArray();
                 if (!numbers.IsMatch(compareString[0]) || compareString[1] != ")")
                     throw new Exception(
-                       MathErrorMessager.InvalidOperatorAfterParenthesisMessage(compareString[1]));
+                       MathErrorMessager.WrongNotationForANegativeNumber);
             }
 
             if (compareString[0] == "(" && onlyOperators.IsMatch(compareString[1]))
