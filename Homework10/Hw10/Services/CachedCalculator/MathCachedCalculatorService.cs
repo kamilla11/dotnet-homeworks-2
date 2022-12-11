@@ -25,7 +25,7 @@ public class MathCachedCalculatorService : IMathCalculatorService
         var calculation = await _simpleCalculator.CalculateMathExpressionAsync(expression);
         if (calculation.IsSuccess)
         {
-            _dbContext.Add(new SolvingExpression() { Expression = expression, Result = calculation.Result });
+            _dbContext.Add(new SolvingExpression() { Expression = expression!, Result = calculation.Result });
             await _dbContext.SaveChangesAsync();
         }
 

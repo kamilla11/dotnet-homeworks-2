@@ -89,8 +89,7 @@ public class PostfixParser
     
         if (input.ToCharArray().Count(c => c == '(') != input.ToCharArray().Count(c => c == ')'))
             throw new Exception(MathErrorMessager.IncorrectBracketsNumber);
-    
-        //Regex operators = new Regex(@"[\-+*/(). ]", RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
+        
         Regex onlyOperators = new Regex(@"[\-+*/]", RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
     
         var numbers = new Regex(@"^\d+");
@@ -137,24 +136,4 @@ public class PostfixParser
         return true;
     }
     
-
-     private static bool CheckCorrectParenthesis(string input)
-     {
-         var open = 0;
-         foreach (var c in input)
-             switch (c)
-             {
-                 case '(':
-                     open++;
-                     break;
-                 case ')' when open == 0:
-                     return false;
-                 case ')':
-                     open--;
-                     break;
-             }
-
-         return open == 0;
-     }
-
 }

@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Homework10.Migrations
 {
+    [ExcludeFromCodeCoverage]
     /// <inheritdoc />
     public partial class CalculatorMigrations : Migration
     {
