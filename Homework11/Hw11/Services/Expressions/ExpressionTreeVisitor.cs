@@ -5,14 +5,19 @@ namespace Hw11.Services.Expressions;
 
 public class ExpressionTreeVisitor
 {
+    public async Task<double> VisitExpressionAsync(Expression expression)
+    {
+        return await VisitAsync((dynamic)expression);
+    }
+
     public async Task<double> VisitAsync(BinaryExpression expression)
     {
         await Task.Delay(1000);
-        var task1 = Task.Run(() => VisitAsync((dynamic)expression.Left));
-        var task2 = Task.Run(() => VisitAsync((dynamic)expression.Right));
+        var task1 = Task.Run(() => VisitExpressionAsync(expression.Left));
+        var task2 = Task.Run(() => VisitExpressionAsync(expression.Right));
         var res = await Task.WhenAll(task1, task2);
         await Task.Yield();
-        return GetResult(expression, res[0].Result, res[1].Result);
+        return GetResult(expression, res[0], res[1]);
     }
 
     public async Task<double> VisitAsync(ConstantExpression expression)

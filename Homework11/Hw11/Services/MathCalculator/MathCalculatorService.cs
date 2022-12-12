@@ -9,8 +9,8 @@ public class MathCalculatorService : IMathCalculatorService
     public async Task<double> CalculateMathExpressionAsync(string? expression)
     {
         var postfix = PostfixParser.ConvertToPostfix(expression);
-            var expressionTree = ExpressionTree.GenerateExpressionTree(postfix);
-            var treeVisited = await new ExpressionTreeVisitor().VisitAsync((dynamic)expressionTree);
-            return treeVisited;
+        var expressionTree = ExpressionTree.GenerateExpressionTree(postfix);
+        var treeVisited = await new ExpressionTreeVisitor().VisitExpressionAsync(expressionTree);
+        return treeVisited;
     }
 }
