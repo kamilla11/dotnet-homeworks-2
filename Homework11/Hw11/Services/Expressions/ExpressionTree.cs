@@ -33,7 +33,6 @@ public class ExpressionTree
         "+" => Expression.Add(a, b),
         "-" => Expression.Subtract(a, b),
         "/" => Expression.Divide(a, b),
-        "*" => Expression.Multiply(a, b),
-        _ => throw new Exception(MathErrorMessager.UnknownCharacter)
+        "*" => Expression.Multiply(a, b)
     };
 }

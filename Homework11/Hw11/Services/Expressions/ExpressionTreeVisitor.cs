@@ -20,7 +20,7 @@ public class ExpressionTreeVisitor
         return (double)expression.Value;
     }
 
-    private static double GetResult(Expression binaryExpr, double value1, double value2)
+    public static double GetResult(Expression binaryExpr, double value1, double value2)
     {
         return binaryExpr.NodeType switch
         {
@@ -28,7 +28,7 @@ public class ExpressionTreeVisitor
             ExpressionType.Subtract => value1 - value2,
             ExpressionType.Multiply => value1 * value2,
             ExpressionType.Divide => (value2 < Double.Epsilon)
-                ? throw new Exception(MathErrorMessager.DivisionByZero)
+                ? throw new DivideByZeroException(MathErrorMessager.DivisionByZero)
                 : value1 / value2,
             _ => throw new Exception(MathErrorMessager.UnknownCharacter)
         };
