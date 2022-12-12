@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using Hw11.ErrorMessages;
+using Hw11.Exceptions;
 
 namespace Hw11.Services.Parser;
 
@@ -89,7 +90,7 @@ public class PostfixParser
             throw new Exception(MathErrorMessager.EmptyString);
 
         if (input.ToCharArray().Count(c => c == '(') != input.ToCharArray().Count(c => c == ')'))
-            throw new Exception(MathErrorMessager.IncorrectBracketsNumber);
+            throw new InvalidSyntaxException(MathErrorMessager.IncorrectBracketsNumber);
 
         Regex onlyOperators = new Regex(@"[\-+*/]", RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
 
@@ -97,7 +98,7 @@ public class PostfixParser
         foreach (var c in input.Where(c =>
                      !numbers.IsMatch(c.ToString()) &&
                      !new[] { "+", "-", "/", "*", "(", ")", " ", "." }.Contains(c.ToString())))
-            throw new Exception(MathErrorMessager.UnknownCharacterMessage(c));
+            throw new InvalidSymbolException(MathErrorMessager.UnknownCharacterMessage(c));
 
         var splittedInput = Delimiters.Split(input.Replace(" ", "")).Where(c => c != String.Empty).ToArray();
         var tempString = splittedInput;
@@ -106,7 +107,7 @@ public class PostfixParser
             var compareString = tempString.Take(2).ToArray();
             if (onlyOperators.IsMatch(compareString[0]) &&
                 onlyOperators.IsMatch(compareString[1]))
-                throw new Exception(MathErrorMessager.TwoOperationInRowMessage(compareString[0],
+                throw new InvalidSyntaxException(MathErrorMessager.TwoOperationInRowMessage(compareString[0],
                     compareString[1]));
             if (compareString[0] == "(" && compareString[1] == "-" && tempString.Length - 2 > 1)
             {
@@ -117,22 +118,22 @@ public class PostfixParser
             }
 
             if (compareString[0] == "(" && onlyOperators.IsMatch(compareString[1]))
-                throw new Exception(
+                throw new InvalidSyntaxException(
                     MathErrorMessager.InvalidOperatorAfterParenthesisMessage(compareString[1]));
             if (onlyOperators.IsMatch(compareString[0]) && compareString[1] == ")")
-                throw new Exception(MathErrorMessager.OperationBeforeParenthesisMessage(compareString[0]));
+                throw new InvalidSyntaxException(MathErrorMessager.OperationBeforeParenthesisMessage(compareString[0]));
             tempString = tempString.Skip(1).ToArray();
         }
 
         if (onlyOperators.IsMatch(splittedInput[0]))
-            throw new Exception(MathErrorMessager.StartingWithOperation);
+            throw new InvalidSyntaxException(MathErrorMessager.StartingWithOperation);
         if (onlyOperators.IsMatch(splittedInput[splittedInput.Length - 1]))
-            throw new Exception(MathErrorMessager.EndingWithOperation);
+            throw new InvalidSyntaxException(MathErrorMessager.EndingWithOperation);
 
         var onlyNumbersArray = splittedInput.Where(c => !new[] { "+", "-", "/", "*", "(", ")" }.Contains(c));
         foreach (var c in onlyNumbersArray.Where(c =>
                      !double.TryParse(c.ToString(), out _)))
-            throw new Exception(MathErrorMessager.NotNumberMessage(c));
+            throw new InvalidNumberException(MathErrorMessager.NotNumberMessage(c));
 
         return true;
     }
