@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using Hw11.ErrorMessages;
 
@@ -5,6 +6,7 @@ namespace Hw11.Services.Expressions;
 
 public class ExpressionTreeVisitor
 {
+    [ExcludeFromCodeCoverage]
     public async Task<double> VisitExpressionAsync(Expression expression)
     {
         return await VisitAsync((dynamic)expression);
