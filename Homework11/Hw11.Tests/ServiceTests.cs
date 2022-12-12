@@ -11,6 +11,18 @@ namespace Hw11Tests;
 
 public class ServicesTests : IClassFixture<WebApplicationFactory<Program>>
 {
+    [Theory]
+    [InlineData("2 4 @ 7 * 5 -", MathErrorMessager.UnknownCharacter)]
+    [InlineData("1 3 5 $ +", MathErrorMessager.UnknownCharacter)]
+    public async Task GenerateExpressionTree_InvalidData(string expression, string result)
+    {
+        //act
+        var response = () => ExpressionTree.GenerateExpressionTree(expression);
+        //assert
+        var exception = Assert.Throws<Exception>(response);
+        Assert.Equal(result, exception.Message);
+    }
+
     [Fact]
     public async Task GetResult_InvalidData()
     {

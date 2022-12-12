@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Hw11Tests;
 
-public class CalculationTimeTests: IClassFixture<WebApplicationFactory<Program>>
+public class CalculationTimeTests : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly HttpClient _client;
 
@@ -13,7 +13,7 @@ public class CalculationTimeTests: IClassFixture<WebApplicationFactory<Program>>
     {
         _client = fixture.CreateClient();
     }
-    
+
     [Theory]
     [InlineData("2 + 3 + 4 + 6", 2990, 4000)]
     [InlineData("(2 * 3 + 3 * 3) * (5 / 5 + 6 / 6)", 2990, 4000)]
@@ -21,13 +21,13 @@ public class CalculationTimeTests: IClassFixture<WebApplicationFactory<Program>>
     private async Task CalculatorController_ParallelTest(string expression, long minExpectedTime, long maxExpectedTime)
     {
         var executionTime = await GetRequestExecutionTime(expression);
-        
-        Assert.True(executionTime >= minExpectedTime, 
+
+        Assert.True(executionTime >= minExpectedTime,
             UserMessagerForTest.WaitingTimeIsLess(minExpectedTime, executionTime));
-        Assert.True(executionTime <= maxExpectedTime, 
+        Assert.True(executionTime <= maxExpectedTime,
             UserMessagerForTest.WaitingTimeIsMore(maxExpectedTime, executionTime));
     }
-    
+
     private async Task<long> GetRequestExecutionTime(string expression)
     {
         var watch = Stopwatch.StartNew();

@@ -19,18 +19,21 @@ public class ExpressionTree
             {
                 var right = nodes.Pop();
                 var left = nodes.Pop();
-
-                var operation = token switch
-                {
-                    "+" => Expression.Add(left, right),
-                    "-" => Expression.Subtract(left, right),
-                    "/" => Expression.Divide(left, right),
-                    "*" => Expression.Multiply(left, right)
-                };
+                var operation = ConvertToOperation(left, right, token);
                 nodes.Push(operation);
             }
         }
 
         return nodes.Pop();
     }
+
+
+    private static Expression ConvertToOperation(Expression a, Expression b, string op) => op switch
+    {
+        "+" => Expression.Add(a, b),
+        "-" => Expression.Subtract(a, b),
+        "/" => Expression.Divide(a, b),
+        "*" => Expression.Multiply(a, b),
+        _ => throw new Exception(MathErrorMessager.UnknownCharacter)
+    };
 }
