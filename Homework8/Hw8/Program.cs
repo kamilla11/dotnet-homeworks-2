@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Hw8.Calculator;
+using StackExchange.Profiling.Storage;
 
 namespace Hw8;
 
@@ -12,9 +13,10 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         
         builder.Services.AddSingleton<ICalculator, Calculator.Calculator>();   
-        builder.Services.AddSingleton<IParser, Parser>();   
-        
+        builder.Services.AddSingleton<IParser, Parser>();
         builder.Services.AddControllersWithViews();
+        builder.Services.AddMiniProfiler();
+        
 
         var app = builder.Build();
 
@@ -30,6 +32,7 @@ public class Program
         app.UseRouting();
         app.UseAuthorization();
 
+        app.UseMiniProfiler();
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Calculator}/{action=Index}");

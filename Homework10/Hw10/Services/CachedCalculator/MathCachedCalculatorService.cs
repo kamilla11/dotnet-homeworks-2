@@ -1,4 +1,4 @@
-﻿using Hw10.DbModels;
+using Hw10.DbModels;
 using Hw10.Dto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;

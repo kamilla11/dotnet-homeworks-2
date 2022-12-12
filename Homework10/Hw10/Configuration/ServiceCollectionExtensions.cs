@@ -12,7 +12,7 @@ public static class ServiceCollectionExtensions
     {
         return services.AddTransient<MathCalculatorService>();
     }
-
+    
     public static IServiceCollection AddCachedMathCalculator(this IServiceCollection services)
     {
         return services.AddScoped<IMathCalculatorService>(s =>

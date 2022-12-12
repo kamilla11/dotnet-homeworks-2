@@ -17,7 +17,7 @@ public class Program
         builder.Services
             .AddMathCalculator()
             .AddCachedMathCalculator();
-        
+
         builder.Services.AddMemoryCache();
 
         var app = builder.Build();
