@@ -1,0 +1,30 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-group input{
+  margin: auto;
+}
+
+.button
+{
+  margin: 10px;
+  /*width: 100px;*/
+  background-color: white;
+  border-radius: 1px;
+}

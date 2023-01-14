@@ -1,0 +1,96 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+
+    <h1 class="display-4">Симуляция игры DND</h1>
+
+    <form class="form-vertical text-center" method="post">
+        <div class="form-group text-center">
+            <label for="Name" class="col-sm-2 control-label">Name</label>
+            <input required type="text" class="form-control" name="Name" value="@Model.Name">
+        </div>
+        <div class="form-group">
+            <label for="HitPoints" class="col-sm-2 control-label">HitPoints</label>
+            <input type="number" class="form-control" name="HitPoints" value="@Model.HitPoints">
+        </div>
+        <div class="form-group">
+            <label for="AttackModifier" class="col-sm-2 control-label">AttackModifier</label>
+            <input type="number" class="form-control" name="AttackModifier" value="@Model.AttackModifier">
+        </div>
+        <div class="form-group">
+            <label for="AttackPerRound" class="col-sm-2 control-label">AttackPerRound</label>
+            <input type="number" class="form-control" name="AttackPerRound" value="@Model.AttackPerRound">
+        </div>
+        <div class="form-group">
+            <label for="Damage" class="col-sm-2 control-label">Damage</label>
+            <input required type="text" class="form-control" name="Damage" value="@Model.Damage">
+        </div>
+        <div class="form-group">
+            <label for="DamageModifier" class="col-sm-2 control-label">DamageModifier</label>
+            <input type="number" class="form-control" name="DamageModifier" value="@Model.DamageModifier">
+        </div>
+        <div class="form-group">
+            <label for="Ac" class="col-sm-2 control-label">Ac</label>
+            <input type="number" class="form-control" name="Ac" value="@Model.Ac">
+        </div>
+        <div class="form-group">
+            @if (Model.IsPlayerLose && Model.Monster is not null)
+            {
+                <button disabled type="submit">Бой</button>
+            }
+            else
+            {
+                <button id="reset" class="button" type="submit">Бой</button>
+            }
+
+        </div>
+        <div class="form-group">
+            <button id="reset" class="button" onclick="clickButton()" type="reset">Новый бой</button>
+        </div>
+    </form>
+
+</div>
+
+<div id="log">
+    @if (Model.Monster is not null)
+    {
+        <h2>Ваш противник:</h2>
+        <p>
+            <strong>Id: </strong> @Model.Monster.Id
+        </p>
+        <p>
+            <strong>Name: </strong> @Model.Monster.Name
+        </p>
+        <p>
+            <strong>HitPoints: </strong> @Model.Monster.HitPoints
+        </p>
+        <p>
+            <strong>AttackModifier: </strong> @Model.Monster.AttackModifier
+        </p>
+        <p>
+            <strong>AttackPerRound: </strong> @Model.Monster.AttackPerRound
+        </p>
+        <p>
+            <strong>Damage: </strong> @Model.Monster.Damage
+        </p>
+        <p>
+            <strong>DamageModifier: </strong> @Model.Monster.DamageModifier
+        </p>
+        <p>
+            <strong>Ac: </strong> @Model.Monster.Ac
+        </p>
+    }
+    @if (Model.FightLog is not null)
+    {
+        <h2>Лог Боя</h2>
+        @foreach (var item in Model.FightLog)
+        {
+            <p>@item</p>
+        }
+    }
+
+</div>
